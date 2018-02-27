@@ -4,9 +4,14 @@ import Steps from './Steps';
 class Operation extends Component {
 
     render() {
+        console.log('retOperation', this.props.repOperation);
+
+        let classOperation = this.props.repOperation.op;
+        let className = 'text ' + classOperation;
+
         return (
             <div className="operation">
-                <div className="text multiplication">4 X 7</div>
+                <div className={className}>{this.props.repOperation.digit1} {this.props.repOperation.opChar} {this.props.repOperation.digit2}</div>
                 <div className="score"/>
                 <Steps steps={this.props.steps} />
             </div>

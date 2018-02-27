@@ -24,7 +24,8 @@ const store = createStore(
     {
         operations: operationsLIst,
         levels: levelsList,
-        currentOperation: operationsLIst[1]
+        currentOperation: {},
+        currentLevel: {}
     },
     window.devToolsExtension && window.devToolsExtension()
 );
