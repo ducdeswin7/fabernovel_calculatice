@@ -64,7 +64,6 @@ class App extends Component {
         let coefs = [0.25, 0.6, 1];
         let coef = coefs[this.store.currentLevel.name-1];
 
-        console.log('this.store.currentOperation.name', this.store.currentOperation.name);
         switch(opType) {
             case 'multiplication' :
                 retOperation.digit1 = Math.floor(coef * (this.store.currentLevel === 1 ? Math.random() * 10 : 3 + Math.random() * 7));
@@ -134,55 +133,74 @@ class App extends Component {
                     if (i !== this.store.retOperation.result && Math.random() > 0.7) {
                         // $('.n'+i+' a').addClass('wrong');
                     }
+                    break;
                 default :
             }
         }
     }
 
 
-    // handleAnwserClick(e) {
-    //     e.preventDefault();
-    //     if (!numbersEnabled) return;
-    //     let v = parseInt($(this).find('span').html());
-    //     let resultClass = '';
-    //
-    //     if (v == currentOp.result) {
-    //         resultClass = 'ok';
-    //         correct ++;
-    //
-    //         this.state.numbersEnabled = false;
-    //
-    //         console.log('setTimeout');
-    //
-    //         setTimeout(this.go(), 600);
-    //     } else {
-    //         resultClass = 'ko';
-    //         mistakes ++;
-    //         if (mistakes == 2) {
-    //             this.helpme();
-    //         }
-    //         wrong ++;
-    //     }
-    //
-    //     // Step
-    //     if (this.state.currentStep == steps) {
-    //         // restart steps
-    //         this.state.currentStep = 0;
-    //
-    //         $('.step').removeClass('ok').removeClass('ko');
-    //     }
-    //     $('#step'+this.state.currentStep).addClass(resultClass);
-    //
-    //     this.state.currentStep++;
-    //
-    //     $('.operation .text').addClass(resultClass).delay(200).queue(function () {
-    //         $(this).removeClass(resultClass).dequeue();
-    //     });
-    //
-    //     $(this).addClass(resultClass);
-    //
-    //     $('.score').html('<span class="ok">'+correct+'</span> / <span class="ko">'+wrong+'</span>');
-    // });
+    handleAnwserClick(e, value) {
+        e.preventDefault();
+
+        console.log('e', e);
+        console.log('link value', value);
+
+        if (!this.state.numbersEnabled) return;
+
+        let v = value;
+        let resultClass = '';
+
+        if (v === this.store.retOperation.result) {
+            resultClass = 'ok';
+
+            this.setState({
+                numbersEnabled: false,
+                correct: this.state.correct++
+            });
+
+            console.log('setTimeout');
+
+            setTimeout(this.go(), 600);
+        } else {
+            resultClass = 'ko';
+
+            this.setState({
+                mistakes: this.state.mistakes++
+            });
+
+            if (this.state.mistakes === 2) {
+                this.helpme();
+            }
+
+            this.setState({
+                wrong: this.state.wrong++
+            });
+        }
+
+        // Step
+        if (this.state.currentStep === this.state.totalSteps) {
+            // restart steps
+            this.setState({
+                currentStep: 0
+            });
+            // $('.step').removeClass('ok').removeClass('ko');
+        }
+
+        // $('#step'+this.state.currentStep).addClass(resultClass);
+
+        this.setState({
+            currentStep: this.state.currentStep++
+        });
+
+        // $('.operation .text').addClass(resultClass).delay(200).queue(function () {
+        //     $(this).removeClass(resultClass).dequeue();
+        // });
+
+        // $(this).addClass(resultClass);
+
+        // $('.score').html('<span class="ok">'+ this.state.correct +'</span> / <span class="ko">'+ this.state.wrong +'</span>');
+    }
 
     render() {
         return (
@@ -200,7 +218,7 @@ class App extends Component {
                     repOperation={this.store.retOperation}
                 />
 
-                <Numbers styleState={this.store.styleState} />
+                <Numbers styleState={this.store.styleState} handleAnwserClick={this.handleAnwserClick.bind(this)}/>
 
             </div>
         );

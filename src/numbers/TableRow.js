@@ -8,7 +8,7 @@ class TableRow extends Component {
         let classNameValue = this.props.odd ? 'odd' : '';
 
         const listTableDatas = this.props.numbers.map((item, key) =>
-            <TableData styleState={this.props.styleState} key={key} value={this.props.value * 10 + item} />
+            <TableData handleAnwserClick={this.props.handleAnwserClick} styleState={this.props.styleState} key={key} value={this.props.value * 10 + item} />
         );
 
         return (

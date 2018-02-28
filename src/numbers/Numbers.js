@@ -15,7 +15,7 @@ class Numbers extends Component {
 
     render() {
         let listRows = this.state.numbers.map((item, key) =>
-            <TableRow styleState={this.props.styleState} key={key} odd={!this.state.odd}
+            <TableRow handleAnwserClick={this.props.handleAnwserClick} styleState={this.props.styleState} key={key} odd={!this.state.odd}
                       value={item} numbers={this.state.numbers}/>
         );
 

@@ -13,7 +13,7 @@ class TableData extends Component {
 
         return (
             <td className={classValue} data-value={this.props.value}>
-                <a className={linkClass} href={hrefValue}>
+                <a className={linkClass} href={hrefValue} onClick={(e) => this.props.handleAnwserClick(e, this.props.value)}>
                     <span>{this.props.value}</span>
                 </a>
             </td>
