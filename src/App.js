@@ -55,7 +55,7 @@ class App extends Component {
     getOp(opType) {
         let retOperation = {};
         let coefs = [0.25, 0.6, 1];
-        let coef = coefs[this.store.currentLevel.name-1];
+        let coef = this.store.currentLevel.name? coefs[this.store.currentLevel.name-1] : '';
 
         switch(opType) {
             case 'multiplication' :
