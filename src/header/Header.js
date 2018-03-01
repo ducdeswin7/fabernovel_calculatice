@@ -6,7 +6,6 @@ class Header extends Component {
     render() {
         return (
             <nav className="menu">
-
                 <Op data={this.props.operations}
                     handleOperationType={this.props.handleOperationType}
                     currentOperation={this.props.currentOperation}/>

@@ -4,8 +4,6 @@ export default function levelReducer(state = {}, { type, payload }) {
 
     switch (type) {
         case CHANGE_LEVEL:
-            console.log('action level', state);
-
             state.forEach((item) => {
                 return (item.name === payload.level.name) ? item.isActive = true : item.isActive = false ;
             });

@@ -4,8 +4,6 @@ import Steps from './Steps';
 class Operation extends Component {
 
     render() {
-        console.log('retOperation', this.props.repOperation);
-
         let classOperation = this.props.repOperation.op;
         let className = 'text ' + classOperation;
 

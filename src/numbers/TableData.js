@@ -12,7 +12,7 @@ class TableData extends Component {
         let linkClass = 'btn' + wrongClass + okClass + koClass;
 
         return (
-            <td className={classValue} data-value={this.props.value}>
+            <td className={classValue}>
                 <a className={linkClass} href={hrefValue} onClick={(e) => this.props.handleAnwserClick(e, this.props.value)}>
                     <span>{this.props.value}</span>
                 </a>

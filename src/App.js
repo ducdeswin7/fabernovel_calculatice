@@ -12,7 +12,7 @@ class App extends Component {
         super(props);
 
         this.state = {
-            totalSteps: 20,
+            totalSteps: 19,
             currentStep: 0,
             mistakes: 0,
             correct: 0,
@@ -31,9 +31,6 @@ class App extends Component {
         this.store.dispatch(changeOperationType(this.state.cookieOperation));
         this.store.currentLevel = this.state.cookieLevel;
         this.store.currentOperation = this.state.cookieOperation;
-
-        console.log('this.state.cookieLevel', this.state.cookieLevel);
-
         this.go();
     }
 
@@ -41,9 +38,7 @@ class App extends Component {
         this.store.dispatch(changeOperationType(operation));
         cookie.save('operation', operation);
         this.store.currentOperation = operation;
-
         this.go();
-        console.log('currentOperation', this.store.currentOperation);
     }
 
     onHandleLevelClick(level) {
@@ -51,8 +46,6 @@ class App extends Component {
         cookie.save('level', level);
         this.store.currentLevel = level;
         this.go();
-
-        console.log('currentlevel', this.store.currentLevel);
     }
     
     getOperationObj() {
@@ -100,8 +93,6 @@ class App extends Component {
     }
 
     go() {
-        console.log('go');
-
         this.setState({
             numbersEnabled: true,
             mistakes: 0
@@ -113,10 +104,9 @@ class App extends Component {
                 ko: false
             };
 
+        this.store.currentStep = 0;
+
         this.store.retOperation = this.getOperationObj();
-
-        console.log('getOperationObj', this.getOperationObj());
-
     }
 
     helpme() {
@@ -124,14 +114,14 @@ class App extends Component {
             switch (this.store.retOperation.op) {
                 case 'multiplication' :
                     if (i % this.store.retOperation.digit1 !== 0) {
-                        // $('.n'+i+' a').addClass('wrong');
+                        document.querySelector('.n'+i+' a').classList.add('wrong');
                     }
                     break;
 
                 case 'addition' :
                 case 'soustraction' :
                     if (i !== this.store.retOperation.result && Math.random() > 0.7) {
-                        // $('.n'+i+' a').addClass('wrong');
+                        document.querySelector('.n'+i+' a').classList.add('wrong');
                     }
                     break;
                 default :
@@ -142,9 +132,6 @@ class App extends Component {
 
     handleAnwserClick(e, value) {
         e.preventDefault();
-
-        console.log('e', e);
-        console.log('link value', value);
 
         if (!this.state.numbersEnabled) return;
 
@@ -178,20 +165,26 @@ class App extends Component {
             });
         }
 
+        console.log('this.state', this.state);
         // Step
-        if (this.state.currentStep === this.state.totalSteps) {
-            // restart steps
-            this.setState({
-                currentStep: 0
-            });
-            // $('.step').removeClass('ok').removeClass('ko');
+        if (this.store.currentStep === this.state.totalSteps) {
+            console.log('this.store.totalSteps', this.state.totalSteps);
+
+            this.store.currentStep = 0;
+
+            document.querySelector('.step').classList.remove('ok').add('ko');
         }
 
-        // $('#step'+this.state.currentStep).addClass(resultClass);
+        console.log('this.store.currentStep', this.store.currentStep);
 
-        this.setState({
-            currentStep: this.state.currentStep++
-        });
+        document.querySelector('#step'+this.store.currentStep).classList.add(resultClass);
+
+        console.log('#step+this.store.currentStep', document.querySelector('#step'+this.store.currentStep).classList);
+
+        this.store.currentStep = this.store.currentStep + 1;
+
+        console.log('current', this.store.currentStep);
+        console.log('store', this.store);
 
         // $('.operation .text').addClass(resultClass).delay(200).queue(function () {
         //     $(this).removeClass(resultClass).dequeue();
@@ -205,7 +198,6 @@ class App extends Component {
     render() {
         return (
             <div className="container">
-
                 <Header operations={this.store.getState().operations}
                         handleOperationType={this.onHandleOperationClick.bind(this)}
                         currentOperation={this.store.getState().currentOperation}

@@ -6,7 +6,6 @@ class Steps extends Component {
     loopItem() {
         let str = [];
 
-
         for (let i=0; i < this.props.steps; i++) {
             str.push(<StepItem key={i} value={i}/>);
         }
